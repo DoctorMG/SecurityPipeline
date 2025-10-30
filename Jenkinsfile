@@ -4,6 +4,10 @@ pipeline {
     maven 'Maven_3_8_7'
   }
 
+  environment {
+      JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF-8"
+  }
+
   stages {
     stage('CompileandRunSonarAnalysis') {
       steps {
