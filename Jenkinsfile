@@ -54,7 +54,7 @@ pipeline {
       steps {
         powershell '''
         // bat('trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivy-report-$(Get-Date -Format 'yyyyMMdd-HHmmss').html"')
-          trivy fs . --format template --template "@D:\Dev\trivy\contrib\html.tpl" --output ".\reports\trivy-report-$(Get-Date -Format 'yyyyMMdd-HHmmss').html"
+          trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivy-report-$(Get-Date -Format \'yyyyMMdd-HHmmss\').html"
         '''        
 
       }
