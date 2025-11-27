@@ -16,7 +16,7 @@ pipeline {
         }
       }
     }
-    '''
+    /*
     stage('BuildDockerImage') {
       steps {
         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
@@ -52,7 +52,7 @@ pipeline {
       }
     }
     
-    '''
+    */
     
     stage('SecretsScan-Trivy') {
       steps {
