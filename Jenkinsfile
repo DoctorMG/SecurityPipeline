@@ -16,7 +16,7 @@ pipeline {
         }
       }
     }
-    stage('Build') {
+    stage('BuildDockerImage') {
       steps {
         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
           script {
@@ -25,12 +25,12 @@ pipeline {
         }
       }
     }
-    stage('RunContainerScan') {
+    stage('ContainerScan-Snyk') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           script {
             try {
-              bat("D:\\Dev\\snyk\\snyk-win.exe  container test dockington/checkcontainer")
+              bat("D:\\Dev\\snyk\\snyk-win.exe container test dockington/checkcontainer")
             } catch (err) {
               echo err.getMessage()
             }
@@ -38,20 +38,24 @@ pipeline {
         }
       }
     }
-    stage('RunSnykSCA') {
+    stage('SCA-Snyk') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           bat("mvn snyk:test -fn")
         }
       }
     }
-    stage('RunDASTUsingZAP') {
+    stage('DAST-ZAP') {
       steps {
         bat("D:\\Dev\\ZAP_2.16.0_Crossplatform\\ZAP_2.16.0\\zap.sh -port 9393 -cmd -quickurl https://www.example.com -quickprogress -quickout D:\\Dev\\ZAP_2.16.0_Crossplatform\\ZAP_2.16.0\\Output.html")
       }
     }
-
-    stage('checkov') {
+    stage('SecretsScan-Trivy') {
+      steps {
+        bat("trivy fs .")
+      }
+    }
+    stage('IaCScan-Checkov') {
       steps {
         bat("checkov -s -f main.tf")
       }
