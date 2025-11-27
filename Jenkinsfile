@@ -68,9 +68,17 @@ pipeline {
           $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
           $outputFile = ".\\reports\\trivy-report-$timestamp.html"
 
-          # Trivy-Scan ausführen
+          # Trivy-Scan mit HTML-Report ausführen
+          Write-Host "Starte Trivy-Scan..."
           trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output $outputFile
 
+          # Trivy-Scan mit Log-Output ausführen
+          Write-Host "Erzeuge Log"
+          trivy fs . --format table
+          
+          # JSON-Ausgabe ins Log
+          trivy fs . --format json | Out-Host
+          
         '''
 
 
