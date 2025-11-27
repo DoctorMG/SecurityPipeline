@@ -59,17 +59,8 @@ pipeline {
         // bat('trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivy-report-$(Get-Date -Format 'yyyyMMdd-HHmmss').html"')
 
         powershell '''
-          # Ordner erstellen, falls nicht vorhanden
-          if (!(Test-Path ".\\reports")) {
-              New-Item -ItemType Directory -Path ".\\reports"
-          }
-
-          # Zeitstempel erzeugen
-          $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-          $outputFile = ".\\reports\\trivy-report-$timestamp.html"
-
           # Trivy-Scan ausführen
-          trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output $outputFile
+          trivy fs . 
         '''
 
 
