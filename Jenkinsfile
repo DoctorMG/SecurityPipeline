@@ -16,6 +16,7 @@ pipeline {
         }
       }
     }
+    '''
     stage('BuildDockerImage') {
       steps {
         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
@@ -50,9 +51,18 @@ pipeline {
         bat("D:\\Dev\\ZAP_2.16.0_Crossplatform\\ZAP_2.16.0\\zap.sh -port 9393 -cmd -quickurl https://www.example.com -quickprogress -quickout D:\\Dev\\ZAP_2.16.0_Crossplatform\\ZAP_2.16.0\\Output.html")
       }
     }
+    
+    '''
+    
     stage('SecretsScan-Trivy') {
       steps {
         powershell '''
+        
+          # Ordner erstellen, falls nicht vorhanden
+          if (!(Test-Path ".\\reports")) {
+            New-Item -ItemType Directory -Path ".\\reports"
+          }
+
         // bat('trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivy-report-$(Get-Date -Format 'yyyyMMdd-HHmmss').html"')
           trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivy-report-$(Get-Date -Format \'yyyyMMdd-HHmmss\').html"
         '''        
