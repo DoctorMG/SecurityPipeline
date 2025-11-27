@@ -148,6 +148,7 @@ pipeline {
             # Trivy-Scan mit HTML-Report ausführen
             Write-Host "Generiere CycloneDX Report mit Scan ..."
             trivy fs . --format cyclonedx  --output $outputFile
+            trivy fs . --format cyclonedx
           '''
         }
       }
@@ -166,6 +167,7 @@ pipeline {
             # Trivy-Scan mit HTML-Report ausführen
             Write-Host "Generiere CycloneDX Report mit Scan ..."
             trivy fs . --scanners vuln --format cyclonedx  --output $outputFile
+            trivy fs . --scanners vuln --format cyclonedx
           '''
         }
       }  
@@ -184,6 +186,7 @@ pipeline {
             # Trivy-Scan mit HTML-Report ausführen
             Write-Host "Generiere SPDX Report mit Scan ..."
             trivy fs . --scanners vuln --format spdx  --output $outputFile
+            trivy fs . --scanners vuln --format spdx
           '''
         }
       }
@@ -202,6 +205,7 @@ pipeline {
             # Trivy-Scan mit HTML-Report ausführen
             Write-Host "Generiere SPDX Report mit Scan ..."
             trivy fs . --scanners vuln --format spdx-json  --output $outputFile
+            trivy fs . --scanners vuln --format spdx-json
           '''
         }
     }  
