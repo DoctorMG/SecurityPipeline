@@ -187,7 +187,7 @@ pipeline {
           '''
         }
       }
-      stage('SBOM-SPDX-Trivy') {
+      stage('SBOM-JSON-Trivy') {
         steps {
           powershell '''
             # Ordner erstellen, falls nicht vorhanden
@@ -197,7 +197,7 @@ pipeline {
 
             # Zeitstempel erzeugen
             $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-            $outputFile = ".\\sbom\\spdxBOM-$timestamp.spdx"
+            $outputFile = ".\\sbom\\spdxBOM-$timestamp.json"
 
             # Trivy-Scan mit HTML-Report ausführen
             Write-Host "Generiere SPDX Report mit Scan ..."
