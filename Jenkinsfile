@@ -76,12 +76,21 @@ pipeline {
           Write-Host "Erzeuge Log"
           trivy fs . --format table
           
-          # JSON-Ausgabe ins Log
-          trivy fs . --format json | Out-Host
-          
+          # JSON-Ausgabe abrufen
+          $json = trivy fs . --format json | ConvertFrom-Json
+
+          # Kompakte Zusammenfassung erstellen
+          $vulns = $json.Results.Vulnerabilities
+          if ($vulns) {
+              $total = $vulns.Count
+              $critical = ($vulns | Where-Object { $_.Severity -eq 'CRITICAL' }).Count
+              $high = ($vulns | Where-Object { $_.Severity -eq 'HIGH' }).Count
+              $medium = ($vulns | Where-Object { $_.Severity -eq 'MEDIUM' }).Count
+              $low = ($vulns | Where-Object { $_.Severity -eq 'LOW' }).Count
+
+              Write-Host "=== Trivy Zusammenfassung ==="
+              Write-Host "Gesamt: $total | CRITICAL: $critical | HIGH: $high | MEDIUM: $medium | LOW: $low"
         '''
-
-
       }
     }
     stage('IaCScan-Checkov') {
