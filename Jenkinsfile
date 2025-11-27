@@ -52,7 +52,7 @@ pipeline {
     }
     stage('SecretsScan-Trivy') {
       steps {
-        bat('trivy fs . --format template --template "@D:\Dev\trivy\contrib\html.tpl" --output ".\reports\trivy-report-$(Get-Date -Format 'yyyyMMdd-HHmmss').html"')
+        bat('trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivy-report-$(Get-Date -Format 'yyyyMMdd-HHmmss').html"')
       }
     }
     stage('IaCScan-Checkov') {
