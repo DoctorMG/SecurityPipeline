@@ -60,7 +60,8 @@ pipeline {
 
         powershell '''
           # Trivy-Scan ausführen
-          trivy fs . 
+          trivy fs . --format template --template "@D:\\Dev\\trivy\\contrib\\html.tpl" --output ".\\reports\\trivyReport.html"
+
         '''
 
 
