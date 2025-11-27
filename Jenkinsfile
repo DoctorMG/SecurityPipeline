@@ -90,6 +90,7 @@ pipeline {
 
               Write-Host "=== Trivy Zusammenfassung ==="
               Write-Host "Gesamt: $total | CRITICAL: $critical | HIGH: $high | MEDIUM: $medium | LOW: $low"
+          }
         '''
       }
     }
